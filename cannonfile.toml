@@ -4,26 +4,26 @@ description = "Decentralized trading protocol"
 [setting.salt]
 defaultValue = "uniswap"
 
-[contract.factory]
+[contract.UniswapV3Factory]
 artifact = "UniswapV3Factory"
 salt = "<%= settings.salt %>"
 step = 1
 
 [contract.sUSD]
-artifact = "ERC20"
+artifact = "@openzeppelin/contracts/token/ERC20/ERC20.sol:ERC20"
 args = ["Synthetix USD", "sUSD"]
 salt = "sUSD"
 step = 1
 
 [contract.USDC]
-artifact = "ERC20"
+artifact = "@openzeppelin/contracts/token/ERC20/ERC20.sol:ERC20"
 args = ["USDC", "USDC"]
 salt = "USDC"
 step = 1
 
 [invoke.createPool]
-address = "<%= outputs.factory.contracts.UniswapV3Factory.address %>"
-abi = "<%= outputs.factory.contracts.UniswapV3Factory.abi %>"
+address = "<%= outputs.self.contracts.UniswapV3Factory.address %>"
+abi = "<%= outputs.self.contracts.UniswapV3Factory.abi %>"
 func = "createPool"
 args = ["USDC", "sUSD", 0]
 step = 2
