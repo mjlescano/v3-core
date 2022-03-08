@@ -11,7 +11,7 @@ detect.method = "folder"
 detect.path = "deployments/${network}"
 step = 1
 
-[import.sUSD]
+[contract.sUSD]
 artifact = "@openzeppelin/contracts/token/ERC20/ERC20.sol:ERC20"
 args = ["Synthetix USD", "sUSD"]
 salt = "sUSD"
@@ -19,7 +19,7 @@ detect.method = "folder"
 detect.path = "deployments/${network}"
 step = 2
 
-[import.USDC]
+[contract.USDC]
 artifact = "@openzeppelin/contracts/token/ERC20/ERC20.sol:ERC20"
 args = ["USDC", "USDC"]
 salt = "USDC"
