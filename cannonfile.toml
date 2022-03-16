@@ -24,11 +24,13 @@ step = 1
 [import.token0]
 source = "erc20:0.0.1"
 args = ["<%= settings.token0_name %>", "<%= settings.token0_symbol %>"]
+options.salt = "token0"
 step = 1
 
 [import.token1]
 source = "erc20:0.0.1"
 args = ["<%= settings.token1_name %>", "<%= settings.token1_symbol %>"]
+options.salt = "token1"
 step = 1
 
 [invoke.createPool]
@@ -38,6 +40,6 @@ func = "createPool"
 args = [
   "<%= outputs.token0.contracts.erc20.address %>",
   "<%= outputs.token1.contracts.erc20.address %>",
-  0
+  500
 ]
 step = 2
