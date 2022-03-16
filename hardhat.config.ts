@@ -83,11 +83,7 @@ export default {
       },
     ],
     overrides: {
-      "contracts/CannonImports.sol": v0_8_12,
-      "@openzeppelin/contracts/token/ERC20/ERC20.sol": v0_8_12,
-      "@openzeppelin/contracts/utils/Context.sol": v0_8_12,
-      "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol": v0_8_12,
-      "@openzeppelin/contracts/token/ERC20/IERC20.sol": v0_8_12,
+      'contracts/WETH9.sol': { version: '0.4.18' },
     }
   },
 }

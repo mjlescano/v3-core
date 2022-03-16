@@ -1,4 +1,4 @@
-name = "@uniswap/v3-core"
+name = "uniswap-v3"
 description = "Decentralized trading protocol"
 version = "0.0.1"
 
@@ -17,30 +17,46 @@ defaultValue = "USD Coin"
 [setting.token1_symbol]
 defaultValue = "USDC"
 
-[contract.UniswapV3Factory]
+[setting.pool_fee]
+defaultValue = 500
+
+[contract.weth]
+artifact = "WETH9"
+step = 1
+
+[contract.factory]
 artifact = "UniswapV3Factory"
 salt = "<%= settings.salt %>"
 step = 1
+
+[contract.router]
+artifact = "SwapRouter"
+salt = "<%= settings.salt %>"
+args = [
+  "<%= outputs.self.contracts.factory.address %>",
+  "<%= outputs.self.contracts.weth.address %>",
+]
+step = 2
 
 [import.token0]
 source = "erc20:0.0.1"
 args = ["<%= settings.token0_name %>", "<%= settings.token0_symbol %>"]
 options.salt = "token0"
-step = 1
+step = 2
 
 [import.token1]
 source = "erc20:0.0.1"
 args = ["<%= settings.token1_name %>", "<%= settings.token1_symbol %>"]
 options.salt = "token1"
-step = 1
+step = 2
 
 [invoke.createPool]
-addresses = ["<%= outputs.self.contracts.UniswapV3Factory.address %>"]
-abi = "<%= outputs.self.contracts.UniswapV3Factory.abi %>"
+addresses = ["<%= outputs.self.contracts.factory.address %>"]
+abi = "<%= outputs.self.contracts.factory.abi %>"
 func = "createPool"
 args = [
   "<%= outputs.token0.contracts.erc20.address %>",
   "<%= outputs.token1.contracts.erc20.address %>",
-  500
+  <%= settings.pool_fee %>
 ]
-step = 2
+step = 3
