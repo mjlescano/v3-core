@@ -1,5 +1,6 @@
 name = "@uniswap/v3-core"
 description = "Decentralized trading protocol"
+version = "0.0.1"
 
 [setting.salt]
 defaultValue = "uniswap"
