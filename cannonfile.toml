@@ -4,26 +4,40 @@ description = "Decentralized trading protocol"
 [setting.salt]
 defaultValue = "uniswap"
 
+[setting.token0_name]
+defaultValue = "Synthetix USD"
+
+[setting.token0_symbol]
+defaultValue = "sUSD"
+
+[setting.token1_name]
+defaultValue = "USD Coin"
+
+[setting.token1_symbol]
+defaultValue = "USDC"
+
 [contract.UniswapV3Factory]
 artifact = "UniswapV3Factory"
 salt = "<%= settings.salt %>"
 step = 1
 
-[contract.sUSD]
-artifact = "@openzeppelin/contracts/token/ERC20/ERC20.sol:ERC20"
-args = ["Synthetix USD", "sUSD"]
-salt = "sUSD"
+[import.token0]
+source = "erc20:0.0.1"
+args = ["<%= settings.token0_name %>", "<%= settings.token0_symbol %>"]
 step = 1
 
-[contract.USDC]
-artifact = "@openzeppelin/contracts/token/ERC20/ERC20.sol:ERC20"
-args = ["USDC", "USDC"]
-salt = "USDC"
+[import.token1]
+source = "erc20:0.0.1"
+args = ["<%= settings.token1_name %>", "<%= settings.token1_symbol %>"]
 step = 1
 
 [invoke.createPool]
-address = "<%= outputs.self.contracts.UniswapV3Factory.address %>"
+addresses = ["<%= outputs.self.contracts.UniswapV3Factory.address %>"]
 abi = "<%= outputs.self.contracts.UniswapV3Factory.abi %>"
 func = "createPool"
-args = ["USDC", "sUSD", 0]
+args = [
+  "<%= outputs.token0.contracts.erc20.address %>",
+  "<%= outputs.token1.contracts.erc20.address %>",
+  0
+]
 step = 2
