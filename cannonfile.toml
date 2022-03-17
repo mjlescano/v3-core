@@ -6,7 +6,13 @@ version = "0.0.1"
 defaultValue = "uniswap"
 
 [setting.token0_address]
+defaultValue = "0x0000000000000000000000000000000000000000"
+
 [setting.token1_address]
+defaultValue = "0x0000000000000000000000000000000000000000"
+
+[setting.initialize_ratio]
+defaultValue = "79228162514264337593543950336"
 
 [setting.pool_fee]
 defaultValue = 500
@@ -15,10 +21,32 @@ defaultValue = 500
 artifact = "WETH9"
 step = 1
 
+# [contract.library]
+# artifact = "NFTDescriptor"
+# step = 1
+
 [contract.factory]
 artifact = "UniswapV3Factory"
 salt = "<%= settings.salt %>"
 step = 1
+
+# [contract.position_descriptor]
+# artifact = "NonfungibleTokenPositionDescriptor"
+# salt = "<%= settings.salt %>"
+# args = [
+#   "<%= outputs.self.contracts.weth.address %>",
+#   "weth9",
+# ]
+# step = 2
+
+# [contract.position_manager]
+# artifact = "NonfungiblePositionManager"
+# salt = "<%= settings.salt %>"
+# args = [
+#   "<%= outputs.self.contracts.factory.address %>",
+#   "<%= outputs.self.contracts.weth.address %>",
+# ]
+# step = 3
 
 [contract.router]
 artifact = "SwapRouter"
@@ -27,7 +55,7 @@ args = [
   "<%= outputs.self.contracts.factory.address %>",
   "<%= outputs.self.contracts.weth.address %>",
 ]
-step = 2
+step = 3
 
 [invoke.createPool]
 addresses = ["<%= outputs.self.contracts.factory.address %>"]
@@ -38,4 +66,13 @@ args = [
   "<%= settings.token1_address %>",
   "<%= settings.pool_fee %>"
 ]
-step = 3
+step = 4
+
+[invoke.initialize]
+addresses = ["<%= outputs.self.invokes.createPool.events.0.PoolCreated.0.args.4 %>"]
+abi = "<%= outputs.self.contracts.factory.abi %>"
+func = "initialize"
+args = [
+  "<%= settings.token0_address %>",
+]
+step = 5
