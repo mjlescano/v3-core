@@ -1,9 +1,10 @@
 name = "uniswap-core"
 version = "3.0.0"
 
-[setting.deployer]
-defaultValue = "0x6c9fc64a53c1b71fb3f9af64d1ae3a4931a5f4e9"
+[var.main]
+deployer = "0x6c9fc64a53c1b71fb3f9af64d1ae3a4931a5f4e9"
 
-[contract.UniswapV3Factory]
+[deploy.UniswapV3Factory]
 artifact = "UniswapV3Factory"
 from = "<%= settings.deployer %>"
+nonce = 0
